@@ -84,8 +84,8 @@ def book(user, headers, spots, target, deadline):
         for spot in spots:
             body = {"bookings": [{"bookingStartTime": start, "bookingEndTime": end, "isAnonymous": False, **spot}]}
             r = requests.post(f"{API}/v1.1/bookings", json=body, headers=headers)
-            print(datetime.now(PARIS).isoformat(), user["name"], target, spot["zoneItemId"], r.status_code, r.text[:120])
-            if r.ok:
+            print(datetime.now(PARIS).isoformat(), user["name"], target, spot["zoneItemId"], r.status_code, r.text[:400])
+            if r.ok and r.json().get("successfulBookings"):  # Deskbird répond 200 même si la place est refusée
                 return True
         time.sleep(0.5)
     return False
