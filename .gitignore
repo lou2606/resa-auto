@@ -1,0 +1,6 @@
+.venv/
+.idea/
+__pycache__/
+users.json
+watch_state.json
+*.log
