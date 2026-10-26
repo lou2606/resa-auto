@@ -1,13 +1,16 @@
 name: book
 on:
   schedule:
-    # UTC. Démarre ~1h avant 7h Paris (été et hiver); main.py attend 7h00:00 Europe/Paris.
-    - cron: "45 4 * * 1-5"
+    # UTC. GitHub retarde parfois les schedules de plusieurs heures: 2 déclenchements en avance
+    # (≥2h avant 7h Paris été/hiver); main.py attend 7h00:00 Europe/Paris.
+    - cron: "17 2 * * 1-5"
+    - cron: "47 3 * * 1-5"
   workflow_dispatch:
+concurrency: book  # un seul run à la fois (le suivant attend)
 jobs:
   book:
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
